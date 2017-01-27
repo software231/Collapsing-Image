@@ -125,18 +125,18 @@ public class CollapsingImageLayout extends FrameLayout {
             getViewOffsetHelper(child).onViewLayout();
 
             switch (child.getId()) {
-            case R.id.avatar:
-                mImageLeftExpanded = child.getLeft();
-                mImageTopExpanded = child.getTop();
-                break;
-            case R.id.title:
-                mTitleLeftExpanded = child.getLeft();
-                mTitleTopExpanded = child.getTop();
-                break;
-            case R.id.subtitle:
-                mSubtitleLeftExpanded = child.getLeft();
-                mSubtitleTopExpanded = child.getTop();
-                break;
+                case R.id.avatar:
+                    mImageLeftExpanded = child.getLeft();
+                    mImageTopExpanded = child.getTop();
+                    break;
+                case R.id.title:
+                    mTitleLeftExpanded = child.getLeft();
+                    mTitleTopExpanded = child.getTop();
+                    break;
+                case R.id.subtitle:
+                    mSubtitleLeftExpanded = child.getLeft();
+                    mSubtitleTopExpanded = child.getTop();
+                    break;
             }
         }
     }
@@ -179,9 +179,10 @@ public class CollapsingImageLayout extends FrameLayout {
 
                 if (child.getId() == R.id.avatar) {
 
-                    float scaleFactor = 1F - offsetFactor * .5F ;
+                    float scaleFactor = 1F - offsetFactor * .5F;
                     child.setScaleX(scaleFactor);
                     child.setScaleY(scaleFactor);
+
 
                     int topOffset = (int) ((mImageTopCollapsed - mImageTopExpanded) * offsetFactor) - verticalOffset;
                     int leftOffset = (int) ((mImageLeftCollapsed - mImageLeftExpanded) * offsetFactor);
@@ -189,14 +190,20 @@ public class CollapsingImageLayout extends FrameLayout {
                     child.setPivotY(0);
                     offsetHelper.setTopAndBottomOffset(topOffset);
                     offsetHelper.setLeftAndRightOffset(leftOffset);
+                    Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
+                    Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mImageLeftCollapsed + ", mTitleLeftExpanded = " + mImageLeftExpanded);
+
                 }
 
                 if (child.getId() == R.id.title) {
-
+                    float scaleFactor = 1F - offsetFactor * .5F;
+                    child.setScaleX(scaleFactor);
+                    child.setScaleY(scaleFactor);
                     int topOffset = (int) ((mTitleTopCollapsed - mTitleTopExpanded) * offsetFactor) - verticalOffset;
                     int leftOffset = (int) ((mTitleLeftCollapsed - mTitleLeftExpanded) * offsetFactor);
                     offsetHelper.setTopAndBottomOffset(topOffset);
                     offsetHelper.setLeftAndRightOffset(leftOffset);
+
                     Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
                     Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mTitleLeftCollapsed + ", mTitleLeftExpanded = " + mTitleLeftExpanded);
                 }
@@ -300,4 +307,5 @@ public class CollapsingImageLayout extends FrameLayout {
         public int getLeftAndRightOffset() {
             return mOffsetLeft;
         }
-    }}
+    }
+}

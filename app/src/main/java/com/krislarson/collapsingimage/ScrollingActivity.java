@@ -35,6 +35,9 @@ public class ScrollingActivity extends AppCompatActivity {
         viewPager.setAdapter(new TestPagerAdapter(getSupportFragmentManager()));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -102,7 +105,7 @@ public class ScrollingActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 100;
+            return 10;
         }
 
         @Override
