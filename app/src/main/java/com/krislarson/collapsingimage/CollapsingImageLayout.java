@@ -151,11 +151,14 @@ public class CollapsingImageLayout extends FrameLayout {
 
     class OnOffsetChangedListener implements AppBarLayout.OnOffsetChangedListener {
 
+        private int universalScrollRange;
+
         @Override
         public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
 
             final int insetTop = mLastInsets != null ? mLastInsets.getSystemWindowInsetTop() : 0;
             final int scrollRange = appBarLayout.getTotalScrollRange();
+            universalScrollRange = scrollRange;
             float offsetFactor = (float) (-verticalOffset) / (float) scrollRange;
             final int heightDiff = getHeight() - getMinimumHeight();
             Log.d(TAG, "onOffsetChanged(), offsetFactor = " + offsetFactor);
@@ -190,8 +193,8 @@ public class CollapsingImageLayout extends FrameLayout {
                     child.setPivotY(0);
                     offsetHelper.setTopAndBottomOffset(topOffset);
                     offsetHelper.setLeftAndRightOffset(leftOffset);
-                    Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
-                    Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mImageLeftCollapsed + ", mTitleLeftExpanded = " + mImageLeftExpanded);
+                    //Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
+                    //Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mImageLeftCollapsed + ", mTitleLeftExpanded = " + mImageLeftExpanded);
 
                 }
 
@@ -204,16 +207,26 @@ public class CollapsingImageLayout extends FrameLayout {
                     offsetHelper.setTopAndBottomOffset(topOffset);
                     offsetHelper.setLeftAndRightOffset(leftOffset);
 
-                    Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
-                    Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mTitleLeftCollapsed + ", mTitleLeftExpanded = " + mTitleLeftExpanded);
+                    /*Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
+                    Log.d(TAG, "onOffsetChanged(), offsetting title mTitleLeftCollapsed = " + mTitleLeftCollapsed + ", mTitleLeftExpanded = " + mTitleLeftExpanded);*/
                 }
 
                 if (child.getId() == R.id.subtitle) {
 
                     int topOffset = (int) ((mSubtitleTopCollapsed - mSubtitleTopExpanded) * offsetFactor) - verticalOffset;
-                    int leftOffset = (int) ((mSubtitleLeftCollapsed - mSubtitleLeftExpanded) * offsetFactor);
-                    offsetHelper.setTopAndBottomOffset(topOffset);
-                    offsetHelper.setLeftAndRightOffset(leftOffset);
+                    //int leftOffset = (int) ((mSubtitleLeftCollapsed - mSubtitleLeftExpanded) * offsetFactor);
+                   /* offsetHelper.setTopAndBottomOffset(topOffset);
+                    offsetHelper.setLeftAndRightOffset(leftOffset);*/
+                    if (topOffset > 0) {
+                        child.setVisibility(INVISIBLE);
+                    } else child.setVisibility(VISIBLE);
+                    /*Log.d(TAG, "onOffsetChanged(), offsetting title top = " + topOffset + ", left = " + leftOffset);
+                    Log.d(TAG, "onOffsetChanged(), offsetting title mSubtitleTopCollapsed = " + mSubtitleTopCollapsed + ", mSubtitleLeftCollapsed = " + mSubtitleLeftCollapsed);*/
+
+                   /* do {
+                        child.setVisibility(GONE);
+                    } while (firstTime);*/
+
                 }
             }
         }
